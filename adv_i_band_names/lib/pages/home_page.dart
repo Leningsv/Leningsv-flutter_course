@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               content: CupertinoTextField(
                 controller: textController,
               ),
-              actions: [ 
+              actions: [
                 CupertinoDialogAction(
                     isDefaultAction: true,
                     child: Text('Add'),
