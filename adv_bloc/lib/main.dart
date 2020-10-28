@@ -1,5 +1,5 @@
-import 'package:adv_singleton/pages/page1_page.dart';
-import 'package:adv_singleton/pages/page2_page.dart';
+import 'package:adv_bloc/pages/page1_page.dart';
+import 'package:adv_bloc/pages/page2_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
