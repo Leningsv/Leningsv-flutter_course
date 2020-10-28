@@ -1,22 +1,23 @@
-import 'package:adv_singleton/models/user_model.dart';
-import 'package:adv_singleton/services/user_service.dart';
+import 'package:adv_provider/models/user_model.dart';
+import 'package:adv_provider/services/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Page1Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final UserService userService = Provider.of<UserService>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Pagina 1'),
+        actions: [IconButton(icon: Icon(Icons.exit_to_app), onPressed: () => userService.deleteUser())],
       ),
-      body: StreamBuilder(
-          stream: userService.userStream,
-          builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
-            return snapshot.hasData
-                ? UserInfo(user: userService.user)
-                : Center(child: Text('No hay informacion del usuario'));
-          }),
+      body: userService.existUser
+          ? UserInfo(
+              user: userService.user,
+            )
+          : Center(child: Text('No hay usuario seleccionado')),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.accessibility_new),
         onPressed: () => Navigator.pushNamed(context, 'page2'),
@@ -45,10 +46,10 @@ class UserInfo extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            title: Text('Nombre: ${user.name}'),
+            title: Text('Nombre: ${this.user.name}'),
           ),
           ListTile(
-            title: Text('Edad: ${user.age}'),
+            title: Text('Edad: ${this.user.age}'),
           ),
           Text(
             'Profeciones',
@@ -58,12 +59,11 @@ class UserInfo extends StatelessWidget {
           ListTile(
             title: Text('Profecion 1'),
           ),
-          ListTile(
-            title: Text('Profecion 2'),
-          ),
-          ListTile(
-            title: Text('Profecion 3'),
-          ),
+          ...user.professions
+              .map((profession) => ListTile(
+                    title: Text(profession),
+                  ))
+              .toList()
         ],
       ),
     );
