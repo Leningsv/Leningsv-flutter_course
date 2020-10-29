@@ -1,6 +1,15 @@
 part of 'user_bloc.dart';
 
 @immutable
-abstract class UserState {}
+class UserState {
+  final bool existUser;
+  final UserModel user;
 
-class UserInitial extends UserState {}
+  UserState({UserModel user})
+      : user = user ?? null,
+        existUser = user != null ? true : false;
+
+  UserState copyWith({UserModel user}) => UserState(user: user ?? this.user);
+
+  UserState initial() => new UserState();
+}
