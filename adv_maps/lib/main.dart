@@ -1,3 +1,6 @@
+import 'package:adv_maps/pages/gps_access_page.dart';
+import 'package:adv_maps/pages/loading_page.dart';
+import 'package:adv_maps/pages/map_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,13 +8,17 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: Text('Flutter Demo Home Page')
+      home: LoadingPage(),
+      routes: {
+        'map': (_) => MapPage(),
+        'loading': (_) => LoadingPage(),
+        'gps_access': (_) => GpsAccessPage(),
+      },
     );
   }
 }
